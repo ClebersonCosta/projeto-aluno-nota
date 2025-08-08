@@ -49,7 +49,6 @@ class Program
         EscreveListaAlunos(alunos);
         CalculoMenorCR(alunos);
     }
-
     private static bool ValidarSimNao()
     {
         char resposta;
@@ -77,7 +76,6 @@ class Program
         } while (true);
 
     }
-
     private static void AprovarReprovarAlunos(List<Aluno> alunos)
     {
         foreach (var aluno in alunos)
@@ -126,7 +124,6 @@ class Program
             Console.WriteLine("\n" + mensagem);
         }
     }
-
     private static void CalculoMenorCR(List<Aluno> alunos)
     {
         Aluno? aluno = alunos.MinBy(a => a.MediaGeral);
