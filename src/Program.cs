@@ -2,6 +2,8 @@
 
 class Program
 {
+    public static List<Aluno> alunos = null;
+
     static void Main(string[] args)
     {
         Console.Clear();
@@ -10,32 +12,16 @@ class Program
         Console.WriteLine("*************** Sistema de alunos e notas ***************");
         Console.WriteLine("*********************************************************");
 
-        List<Aluno> alunos = new();
+        alunos = new();
         Aluno aluno;
         do
         {
             aluno = new Aluno();
 
-            Console.WriteLine("");
             Console.Write("Informe o nome do aluno: ");
             aluno.Nome = Console.ReadLine();
 
-            foreach (Disciplinas disciplina in (Disciplinas[])Enum.GetValues(typeof(Disciplinas)))
-            {
-                Console.WriteLine("");
-
-                Console.Write($"Informe a nota do(a) aluno(a) {aluno.Nome} para a disciplina {disciplina}: ");
-                string? notaTemp = Console.ReadLine();
-
-                while (string.IsNullOrEmpty(notaTemp) || !float.TryParse(notaTemp, out float nota) || nota < 0 || nota > 10)
-                {
-                    Console.WriteLine("Nota inválida. Por favor, insira uma nova nota.\n");
-                    Console.Write($"Informe a nota do(a) aluno(a) {aluno.Nome} para a disciplina {disciplina}: ");
-                    notaTemp = Console.ReadLine();
-                }
-
-                aluno.NotaPorDisciplina.Add(disciplina, float.Parse(notaTemp));
-            }
+            PreencherNotas(aluno);
 
             alunos.Add(aluno);
 
@@ -76,6 +62,24 @@ class Program
         } while (true);
 
     }
+
+    public static void PreencherNotas(Aluno aluno)
+    {
+        foreach (Disciplinas disciplina in (Disciplinas[])Enum.GetValues(typeof(Disciplinas)))
+        {
+            string notaTemp = string.Empty;
+            float nota = 0f;
+            do
+            {
+                Console.Write($"Informe a nota do(a) aluno(a) {aluno.Nome} para a disciplina {disciplina}: ");
+                notaTemp = Console.ReadLine();
+
+            } while (!float.TryParse(notaTemp, out nota) || (nota < 0 || nota > 10));
+
+            aluno.NotaPorDisciplina.Add(disciplina, nota);
+        }
+    }
+
     private static void AprovarReprovarAlunos(List<Aluno> alunos)
     {
         foreach (var aluno in alunos)
